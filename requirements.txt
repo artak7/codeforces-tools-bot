@@ -1,0 +1,7 @@
+aiogram==3.15.0
+
+babel==2.16.0
+environs
+pytz
+loguru
+requests
