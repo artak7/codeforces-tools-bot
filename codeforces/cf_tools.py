@@ -198,11 +198,12 @@ class ContestInfo:
 
 
     def get_contestants_names(self, row):
+        part_id = row['party'].get('participantId')
         return (
             row['party']['members'][0].get('name') or 
             row['party']['members'][0].get('handle') or 
             row['party'].get('teamName') or
-            f'NO_NAME_{row['party'].get('participantId')}'
+            f'NO_NAME_{part_id}'
         )
 
 
