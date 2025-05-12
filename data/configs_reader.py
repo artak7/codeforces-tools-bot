@@ -9,6 +9,9 @@ DIR = Path(__file__).absolute().parent.parent
 
 TELEGRAM_BOT_TOKEN = env.str('BOT_TOKEN')
 
+WEBHOOK_URL = env.str("WEBHOOK_URL") + "/webhook"  # Full URL like: https://your-domain.com/webhook
+PORT = int(env.str("PORT", 8000)) 
+
 # ADMIN_ID = env.str("ADMIN_ID") # need list
 
 # RD_DB = env.int("RD_DB", None)
