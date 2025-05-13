@@ -19,9 +19,12 @@ async def health_check(request):
     return web.Response(text="Bot is alive!")
 
 app = web.Application()
-app.add_routes([web.get("/", health_check)])  # Health check at root
 
-webhook_handler = SimpleRequestHandler(dp, bot)
-webhook_handler.register(app, path="/webhook")  # Webhook endpoint
 
-setup_application(app, dp, bot=bot)
+def setup_webhook_app():
+    """Configure webhook handlers"""
+    app.add_routes([web.get("/", health_check)])
+    webhook_handler = SimpleRequestHandler(dp, bot)
+    webhook_handler.register(app, path="/webhook")
+    setup_application(app, dp, bot=bot)
+    return app

@@ -1,5 +1,5 @@
 from pathlib import Path
-from environs import Env
+from environs import Env, exceptions
 
 
 env = Env()
@@ -9,8 +9,12 @@ DIR = Path(__file__).absolute().parent.parent
 
 TELEGRAM_BOT_TOKEN = env.str('BOT_TOKEN')
 
-WEBHOOK_URL = env.str("WEBHOOK_URL") + "/webhook"  # Full URL like: https://your-domain.com/webhook
-PORT = int(env.str("PORT", 8000)) 
+try:
+	WEBHOOK_URL = env.str("WEBHOOK_URL") + "/webhook"  # Full URL like: https://your-domain.com/webhook
+except (exceptions.EnvError) as e:
+	WEBHOOK_URL = None
+
+PORT = int(env.str("PORT", 8000))
 
 # ADMIN_ID = env.str("ADMIN_ID") # need list
 
