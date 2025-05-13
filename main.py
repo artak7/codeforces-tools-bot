@@ -1,9 +1,12 @@
+import aiogram
+import aiohttp
+print("Preloaded dependencies")
 import asyncio
 from aiohttp import web
 import signal
 
 from app import setup_routes, set_default_commands #, delete_default_commands #, setup_middlewares
-from bot import dp, bot, setup_webhook_app #app
+from bot import dp, bot, setup_webhook_app
 from utils import logger
 from data.configs_reader import WEBHOOK_URL, PORT
 

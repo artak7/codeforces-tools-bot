@@ -15,6 +15,7 @@ except (exceptions.EnvError) as e:
 	WEBHOOK_URL = None
 
 PORT = int(env.str("PORT", 8000))
+RENDER_URL = env.str("RENDER_URL", "https://codeforces-tools-bot.onrender.com")
 
 # ADMIN_ID = env.str("ADMIN_ID") # need list
 
