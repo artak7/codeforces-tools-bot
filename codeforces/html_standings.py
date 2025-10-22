@@ -225,7 +225,7 @@ def generate_row(rank: int, participant_name: str, solved: int, penalty: int,
         
         cells.append(f'<td class="{cell_class}">{cell_content}</td>')
     
-    return f'    <tr>\n        {"\n        ".join(cells)}\n    </tr>'
+    return f'    <tr>\n        {"\\n        ".join(cells)}\n    </tr>'
 
 
 def generate_html_standings(contest_name: str, standings_data: List[Dict], 
