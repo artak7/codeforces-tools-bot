@@ -10,6 +10,7 @@ def get_default_commands(lang: str = "en"):
         BotCommand(command="get_configs", description="get configs"), #_("get configs", locale=lang)),
         BotCommand(command="set_configs", description="set configs"), #_("set configs", locale=lang)),
         BotCommand(command="unfreeze_standings", description="unfreeze standings"), #_("unfreeze standings", locale=lang)),
+        BotCommand(command="standings_html", description="generate HTML standings with custom names"), #_("generate HTML standings", locale=lang)),
         BotCommand(command="get_new_contestants", description="check new contestants"), #_("check new contestants", locale=lang)),
         BotCommand(command="get_all_contestants", description="get all contestants"), #_("check new contestants", locale=lang)),
         BotCommand(command="set_names", description="set names for anonymous contestants"), #_("check new contestants", locale=lang)),

@@ -20,6 +20,7 @@ commands_text = '''All Commands:\n
         "SHOW_UNOFFICIAL": "true"
     }\n
     /unfreeze_standings - return info about contest in 2 format to load it in unfreezing beautifier
+    /standings_html - generate HTML standings page with custom names replacing anonymous participants
     /get_new_contestants - check whether new contestants joined to the current contest
     /get_all_contestants - get all contestants names joined to the current contest
     /set_names - set names for anonymous contestants

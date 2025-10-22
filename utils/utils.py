@@ -3,16 +3,17 @@ from aiogram import types
 from bot import bot
 from .logging import logger
 
-async def send_json_data(chat_id: int, data: dict, filename: str ='file'):
-    json_data = json.dumps(data, indent=4, ensure_ascii=False)
+async def send_file_data(chat_id: int, filetype: str, filedata: dict, filename: str ='file'):
+    if filetype == "JSON" or filedata is None:
+        filedata = json.dumps(filedata, indent=4, ensure_ascii=False)
     file = types.BufferedInputFile(
-        file=json_data.encode('utf-16'),
+        file=filedata.encode('utf-16'),
         filename=filename
     )
     await bot.send_document(
         chat_id=chat_id,
         document=file,
-        caption='Here is your generated JSON'
+        caption=f'Here is your generated {filetype}'
     )
 
 

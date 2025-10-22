@@ -2,6 +2,7 @@ import requests, hashlib, json, random, time #, locale
 # locale.setlocale(locale.LC_ALL, 'Russian')
 from data.configs_reader import DIR
 from .cf_configs_reader import get_cf_configs, load_default_configs
+from .html_standings import standings_from_codeforces_api
 from utils import logger, read, write
 
 
@@ -282,3 +283,35 @@ def get_contestants(chat_id, key='all'):
         elif key == 'new':
             status, logs, names = new_contest_data.check_new_contestants(chat_id)
     return status, logs, names
+
+
+def generate_html_standings(chat_id):
+    """Generate HTML standings page with custom names"""
+    status, logs, configs = get_cf_configs(chat_id)
+    if status == 'FAILED':
+        status, def_logs, configs = load_default_configs(chat_id)
+        logs += def_logs
+    
+    html = None
+    if status == 'OK':
+        new_contest_data = ContestInfo(configs)
+        # Get standings data
+        status, standings_logs, contest_data = new_contest_data.get_contest_data('contest.standings')
+        logs += standings_logs
+        
+        if status == 'OK':
+            # Get custom names
+            _, names_logs, custom_names = new_contest_data.get_saved_contestants(chat_id)
+            logs += names_logs
+            
+            # Generate HTML
+            html = standings_from_codeforces_api(contest_data, custom_names)
+            
+            # Save HTML to file
+            contest_id = configs['CONTEST_ID']
+            file_name = f'{DIR}/data/standings_{chat_id}_{contest_id}.html'
+            with open(file_name, 'w', encoding='utf-8') as f:
+                f.write(html)
+            logs += f'HTML standings saved to {file_name}\n'
+    
+    return status, logs, html

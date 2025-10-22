@@ -4,3 +4,15 @@
 .venv
 *.sqlite3
 **/logs
+**/docs
+
+# Generated HTML standings
+standings_*.html
+standings_original.html
+standings_custom.html
+data/standings_*.html
+
+# Cache
+data/cf_settings_*.json
+data/Names_*.json
+

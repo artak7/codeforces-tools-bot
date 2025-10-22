@@ -1,13 +1,14 @@
 import json
 from aiogram import F
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.types import Message, InputFile, BufferedInputFile
 
 # from app.keyboards import LangKeyboard
 # from bot import _
-from utils import send_json_data, write
+from utils import send_file_data, write
 from ..routes import user_router as router
 from codeforces import get_contestants, get_unfreezed_standings, get_cf_configs, load_default_configs
+from codeforces import generate_html_standings as gen_html
 from data.configs_reader import DIR
 
 
@@ -17,7 +18,15 @@ async def _unfreeze_standings(message: Message):
 	for status, logs, json, file_name in docs:
 		if status == 'FAILED':
 			await message.answer(logs)
-		await send_json_data(message.chat.id, json, file_name)
+		await send_file_data(message.chat.id, "JSON", json, file_name)
+
+
+@router.message(Command("standings_html"))
+async def _standings_html(message: Message):
+	status, logs, html = gen_html(message.chat.id)
+	if status == 'FAILED':
+		await message.answer(logs)
+	await send_file_data(message.chat.id, "HTML", html, "standings.html")
 
 
 def beautify(data):
