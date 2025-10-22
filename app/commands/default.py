@@ -14,6 +14,9 @@ def get_default_commands(lang: str = "en"):
         BotCommand(command="get_new_contestants", description="check new contestants"), #_("check new contestants", locale=lang)),
         BotCommand(command="get_all_contestants", description="get all contestants"), #_("check new contestants", locale=lang)),
         BotCommand(command="set_names", description="set names for anonymous contestants"), #_("check new contestants", locale=lang)),
+        BotCommand(command="start_monitor", description="start monitoring for new contestants"),
+        BotCommand(command="stop_monitor", description="stop monitoring"),
+        BotCommand(command="monitor_status", description="check monitoring status"),
         # BotCommand(command="/stop", description=_("stop chat", locale=lang)),
         # BotCommand(command="/lang", description=_("change language", locale=lang)),
     ]
@@ -25,8 +28,17 @@ def get_default_commands(lang: str = "en"):
 
 
 async def set_default_commands():
-    await bot.delete_my_commands(scope=BotCommandScopeDefault()) # Doesnt work!!
-    await bot.set_my_commands(get_default_commands(), scope=BotCommandScopeDefault())
+    # Delete old commands first
+    try:
+        await bot.delete_my_commands()
+    except Exception:
+        pass  # Ignore if no commands exist
+    
+    # Set new commands
+    await bot.set_my_commands(get_default_commands())
+
+    # await bot.delete_my_commands(scope=BotCommandScopeDefault()) # Doesnt work!!
+    # await bot.set_my_commands(get_default_commands(), scope=BotCommandScopeDefault())
     # for lang in i18n.available_locales:
     #     await bot.set_my_commands(
     #         get_default_commands(lang), scope=BotCommandScopeDefault(), language_code=lang

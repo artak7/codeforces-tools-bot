@@ -10,6 +10,7 @@ from ..routes import user_router as router
 from codeforces import get_contestants, get_unfreezed_standings, get_cf_configs, load_default_configs
 from codeforces import generate_html_standings as gen_html
 from data.configs_reader import DIR
+from app.keyboards import get_menu_keyboard
 
 
 @router.message(Command("unfreeze_standings"))

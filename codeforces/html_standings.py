@@ -181,7 +181,7 @@ def generate_problem_headers(problems: List[Dict]) -> str:
     # Add right class to last header
     if headers:
         headers[-1] = headers[-1].replace('<th class="top"', '<th class="top right"')
-    return '\\n                '.join(headers)
+    return '\n                '.join(headers)
 
 
 def generate_row(rank: int, participant_name: str, solved: int, penalty: int, 
@@ -225,7 +225,7 @@ def generate_row(rank: int, participant_name: str, solved: int, penalty: int,
         
         cells.append(f'<td class="{cell_class}">{cell_content}</td>')
     
-    return f'    <tr>\\n        {"\\n        ".join(cells)}\\n    </tr>'
+    return f'    <tr>\n        {"\n        ".join(cells)}\n    </tr>'
 
 
 def generate_html_standings(contest_name: str, standings_data: List[Dict], 
@@ -276,7 +276,7 @@ def generate_html_standings(contest_name: str, standings_data: List[Dict],
     html = HTML_TEMPLATE.format(
         contest_name=contest_name,
         problem_headers=problem_headers,
-        rows='\\n'.join(rows)
+        rows='\n'.join(rows)
     )
     
     return html
@@ -331,7 +331,7 @@ def standings_from_codeforces_api(api_data: Dict, custom_names: Optional[Dict[st
         standings_data.append({
             'participant': participant_name,
             'rank': row.get('rank', 0),
-            'solved': row.get('points', 0),
+            'solved': int(row.get('points', 0)),
             'penalty': row.get('penalty', 0),
             'problems': problem_results
         })

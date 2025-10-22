@@ -6,6 +6,7 @@ from aiohttp import web
 import signal
 
 from app import setup_routes, set_default_commands #, delete_default_commands #, setup_middlewares
+from app.scheduler import monitor
 from bot import dp, bot, setup_webhook_app
 from utils import logger
 from data.configs_reader import WEBHOOK_URL, PORT
@@ -22,13 +23,16 @@ async def on_startup() -> None:
 
 
 async def on_shutdown() -> None:
+    # Stop all monitoring tasks
+    await monitor.cleanup()
+    
     if WEBHOOK_URL:
         await bot.delete_webhook(drop_pending_updates=True)
         await bot.session.close()
     logger.info("Bot stopped!")
     # Redis
     # await dp.storage.close() 
-    # await dp.storage.wait_closed() 
+    # await dp.storage.wait_closed()
 
 
 async def start_webhook():
